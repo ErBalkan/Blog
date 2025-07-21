@@ -7,6 +7,7 @@ public class Result : IResult
     public bool Success { get; }
     public string? Message { get; }
 
+    public Result(){}
     // Constructor, sadece başarı durumunu alır. Mesaj varsayılan olarak boş kalır.
     public Result(bool success) => Success = success;
     // Constructor, hem başarı durumunu hem de mesajı alır.

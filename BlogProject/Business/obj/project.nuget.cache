@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "AuVliRm+FSU=",
+  "dgSpecHash": "NZGimcmwLag=",
   "success": true,
-  "projectFilePath": "C:\\Users\\errba\\Desktop\\BlogProject\\Business\\Business.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\errba\\Desktop\\Blog\\BlogProject\\Business\\Business.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\errba\\.nuget\\packages\\fluentvalidation\\12.0.0\\fluentvalidation.12.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

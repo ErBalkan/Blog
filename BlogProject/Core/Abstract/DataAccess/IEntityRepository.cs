@@ -4,7 +4,7 @@ using Core.Abstract.Entities;
 namespace Core.Abstract.DataAccess;
     // TEntity: Bu repository'nin hangi varlık tipi için kullanılacağını belirtir.
     // TEntity, bir IEntity olmalı ve new() ile örneklenebilir olmalı (concrete sınıf olmalı).
-    public interface IEntityRepository<TEntity> where TEntity : class, IEntity, new()
+    public interface IEntityRepository<TEntity> where TEntity : class, IEntity
     {
         // Tek bir varlığı Id'ye göre asenkron olarak getirir.
         Task<TEntity> GetByIdAsync(int id);

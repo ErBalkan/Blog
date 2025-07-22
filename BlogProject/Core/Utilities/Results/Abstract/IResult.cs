@@ -1,16 +1,12 @@
 namespace Core.Utilities.Results.Abstract;
 
-public interface IResult
-{
-    bool Success { get; } // İşlemin başarılı olup olmadığını belirtir.
-    string? Message { get; } // İşlemle ilgili mesajı içerir (başarı veya hata mesajı). 
-}
+    // Bir işlemin sonucunu temsil eden temel arayüz.
+    public interface IResult
+    {
+        // İşlemin başarılı olup olmadığını gösterir. (true: başarılı, false: başarısız)
+        bool Success { get; }
 
-/*
-Success (bool): İşlemin başarı durumunu gösteren bir boolean değer. 
-true ise başarılı, false ise başarısız.
-
-Message (string): İşlemle ilgili bir mesaj 
-(örneğin "Kullanıcı başarıyla eklendi" veya "Geçersiz parola").
-*/
+        // İşlemle ilgili bir mesaj (örneğin "Kategori başarıyla eklendi." veya "Kategori bulunamadı.").
+        string? Message { get; } // Nullable string olarak işaretledik. Mesajın boş olması da bir senaryo olabilir.
+    }
 

@@ -13,11 +13,11 @@ public interface ICategoryService
     Task<IDataResult<List<Category>>> GetAllAsync();
 
     // Yeni bir kategori ekler.
-    Task<IResult> AddAsync(Category category);
+    Task<IMyResult> AddAsync(Category category);
 
     // Mevcut bir kategoriyi günceller.
-    Task<IResult> UpdateAsync(Category category);
+    Task<IMyResult> UpdateAsync(Category category);
 
     // Bir kategoriyi siler (soft delete).
-    Task<IResult> DeleteAsync(int categoryId); // Id ile silme, Business katmanında daha yaygındır.
+    Task<IMyResult> DeleteAsync(int categoryId); // Id ile silme, Business katmanında daha yaygındır.
 }

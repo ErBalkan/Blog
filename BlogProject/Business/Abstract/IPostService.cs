@@ -7,9 +7,9 @@ public interface IPostService
 {
     Task<IDataResult<Post>> GetByIdAsync(int postId);
     Task<IDataResult<List<Post>>> GetAllAsync();
-    Task<IResult> AddAsync(Post post);
-    Task<IResult> UpdateAsync(Post post);
-    Task<IResult> DeleteAsync(int postId);
+    Task<IMyResult> AddAsync(Post post);
+    Task<IMyResult> UpdateAsync(Post post);
+    Task<IMyResult> DeleteAsync(int postId);
         
     // Kategoriye göre makaleleri getirme gibi özel iş operasyonları eklenebilir.
     Task<IDataResult<List<Post>>> GetPostsByCategoryIdAsync(int categoryId);

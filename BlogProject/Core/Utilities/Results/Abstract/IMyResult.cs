@@ -1,7 +1,7 @@
 namespace Core.Utilities.Results.Abstract;
 
     // Bir işlemin sonucunu temsil eden temel arayüz.
-    public interface IResult
+    public interface IMyResult
     {
         // İşlemin başarılı olup olmadığını gösterir. (true: başarılı, false: başarısız)
         bool Success { get; }

@@ -6,19 +6,46 @@ namespace BlogProject.DataAccess.Concrete.EntityFramework.Context;
     // Bu sınıf, uygulamamızın veritabanı ile nasıl etkileşime gireceğini tanımlar.
     public class BlogProjectDbContext : DbContext
     {
-        // Constructor (Yapıcı Metot):
-        // Bu metot, DbContext'imiz oluşturulurken kullanılır.
-        // DbContextOptions<BlogProjectDbContext> parametresi, uygulamanın başlangıcında (örneğin WebAPI'de Program.cs'te)
-        // veritabanı bağlantı dizesi gibi yapılandırma bilgilerini almamızı sağlar.
-        public BlogProjectDbContext(DbContextOptions<BlogProjectDbContext> options) : base(options)
+        
+        // OnConfiguring metodu, DbContext örneği oluşturulduğunda çağrılır.
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Database.EnsureCreated():
-            // Bu satır çok önemlidir ve bizim senaryomuzda migration kullanmadan veritabanını otomatik oluşturma isteğimize hizmet eder.
-            // Uygulama ilk kez çalıştığında, eğer bağlantı dizesinde belirtilen isimde bir veritabanı yoksa,
-            // EF Core bu metodu kullanarak veritabanını ve OnModelCreating'de tanımladığımız şemayı temel alarak tabloları otomatik olarak oluşturur.
-            // Dikkat: Eğer veritabanı zaten varsa, bu metot hiçbir şey yapmaz; şema değişikliklerini kontrol etmez veya güncellemez.
-            Database.EnsureCreated(); 
+            if (!optionsBuilder.IsConfigured)
+            {
+                // PostgreSQL bağlantı dizenizi buraya ekleyin.
+                // Bu bağlantı dizesi, appsettings.json'daki ile aynı olmalıdır.
+                // Örnek bir PostgreSQL bağlantı dizesi formatı:
+                // "Host=localhost;Port=5432;Database=BlogProjectDb;Username=myuser;Password=mypassword;"
+                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=BlogProjectDb;Username=postgres;Password=12345;");
+            }
         }
+    // Constructor (Yapıcı Metot):
+    // Bu metot, DbContext'imiz oluşturulurken kullanılır.
+    // DbContextOptions<BlogProjectDbContext> parametresi, uygulamanın başlangıcında (örneğin WebAPI'de Program.cs'te)
+    // veritabanı bağlantı dizesi gibi yapılandırma bilgilerini almamızı sağlar.
+    public BlogProjectDbContext(DbContextOptions<BlogProjectDbContext> options) : base(options)
+    {
+        // Database.EnsureCreated():
+        // Bu satır çok önemlidir ve bizim senaryomuzda migration kullanmadan veritabanını otomatik oluşturma isteğimize hizmet eder.
+        // Uygulama ilk kez çalıştığında, eğer bağlantı dizesinde belirtilen isimde bir veritabanı yoksa,
+        // EF Core bu metodu kullanarak veritabanını ve OnModelCreating'de tanımladığımız şemayı temel alarak tabloları otomatik olarak oluşturur.
+        // Dikkat: Eğer veritabanı zaten varsa, bu metot hiçbir şey yapmaz; şema değişikliklerini kontrol etmez veya güncellemez.
+        Database.EnsureCreated();
+    }
+        
+        // 2. Parametresiz public constructor (EfEntityRepositoryBase için)
+        // Bu constructor, EfEntityRepositoryBase sınıfındaki 'new TContext()' çağrısı tarafından kullanılır.
+        // Burada, OptionsBuilder kullanarak bağlantı dizesini manuel olarak yapılandırmamız gerekir.
+        // NOT: Connection string burada sabit kodlanmış. Daha iyi bir yaklaşım için Configuration'dan çekmek gerekir.
+        // Ancak EfEntityRepositoryBase'in TContext kısıtlamasını karşılamak için en basit çözüm budur.
+        public BlogProjectDbContext()
+        {
+            // Veritabanı bağlantı dizesini doğrudan burada belirtebilirsiniz.
+            // Bu, yalnızca EfEntityRepositoryBase'in DbContext'i kendi içinde oluşturduğu durumlar için geçerlidir.
+            // Gerçek uygulamada, bu bağlantı dizesini appsettings.json'dan veya başka bir yapılandırma kaynağından almak daha güvenlidir.
+            // Örneğin: optionsBuilder.UseSqlServer("Server=YOUR_SERVER_NAME;Database=BlogProjectDb;Trusted_Connection=True;TrustServerCertificate=True");
+        }
+
 
         // DbSet<TEntity> Özellikleri:
         // Bu özellikler, C# varlık sınıflarımızın (entity classes) veritabanındaki hangi tablolara karşılık geldiğini EF Core'a söyler.

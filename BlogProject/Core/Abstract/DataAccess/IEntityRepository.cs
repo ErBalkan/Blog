@@ -7,10 +7,10 @@ namespace Core.Abstract.DataAccess;
     public interface IEntityRepository<TEntity> where TEntity : class, IEntity
     {
         // Tek bir varlığı Id'ye göre asenkron olarak getirir.
-        Task<TEntity> GetByIdAsync(int id);
+        Task<TEntity?> GetByIdAsync(int id);
 
         // Belirli bir koşula uyan tek bir varlığı asenkron olarak getirir.
-        Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter);
+        Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> filter);
 
         // Belirli bir koşula uyan tüm varlıkları asenkron olarak getirir (liste).
         Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? filter = null);

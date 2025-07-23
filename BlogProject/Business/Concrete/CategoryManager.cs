@@ -27,7 +27,7 @@ namespace BlogProject.Business.Concrete;
         // --- CRUD (Create, Read, Update, Delete) Operasyonları ve İş Mantığı ---
 
         // Asenkron olarak yeni bir kategori ekler.
-        public async Task<IResult> AddAsync(Category category)
+        public async Task<IMyResult> AddAsync(Category category)
         {
             // 1. FluentValidation ile Gelen Veriyi Doğrulama:
             // CategoryValidator sınıfından bir örnek oluşturulur.
@@ -90,7 +90,7 @@ namespace BlogProject.Business.Concrete;
         }
 
         // Asenkron olarak mevcut bir kategoriyi günceller.
-        public async Task<IResult> UpdateAsync(Category category)
+        public async Task<IMyResult> UpdateAsync(Category category)
         {
             // 1. FluentValidation ile Gelen Veriyi Doğrulama:
             var validator = new CategoryValidator();
@@ -120,7 +120,7 @@ namespace BlogProject.Business.Concrete;
         }
 
         // Asenkron olarak belirli bir Id'ye sahip kategoriyi siler (soft delete).
-        public async Task<IResult> DeleteAsync(int categoryId)
+        public async Task<IMyResult> DeleteAsync(int categoryId)
         {
             // Silinecek kategori Id'ye göre bulunur.
             var categoryToDelete = await _categoryRepository.GetByIdAsync(categoryId);

@@ -21,7 +21,7 @@ namespace BlogProject.Business.Concrete;
             _userService = userService;
         }
 
-        public async Task<IResult> AddAsync(Comment comment)
+        public async Task<IMyResult> AddAsync(Comment comment)
         {
             // 1. Doğrulama:
             var validator = new CommentValidator();
@@ -57,7 +57,7 @@ namespace BlogProject.Business.Concrete;
             return new SuccessResult("Yorum başarıyla eklendi.");
         }
 
-        public async Task<IResult> DeleteAsync(int commentId)
+        public async Task<IMyResult> DeleteAsync(int commentId)
         {
             var commentToDelete = await _commentRepository.GetByIdAsync(commentId);
             if (commentToDelete == null)
@@ -98,7 +98,7 @@ namespace BlogProject.Business.Concrete;
             return new SuccessDataResult<List<Comment>>(comments, $"'{postResult.Data.Title}' başlıklı makaleye ait yorumlar listelendi.");
         }
 
-        public async Task<IResult> UpdateAsync(Comment comment)
+        public async Task<IMyResult> UpdateAsync(Comment comment)
         {
             // 1. Doğrulama:
             var validator = new CommentValidator();

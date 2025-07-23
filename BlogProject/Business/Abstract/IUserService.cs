@@ -9,9 +9,9 @@ public interface IUserService
     Task<IDataResult<User>> GetByEmailAsync(string email); // E-posta ile kullanıcı bulma
     Task<IDataResult<User>> GetByUsernameAsync(string username); // Kullanıcı adı ile kullanıcı bulma
     Task<IDataResult<List<User>>> GetAllAsync();
-    Task<IResult> AddAsync(User user);
-    Task<IResult> UpdateAsync(User user);
-    Task<IResult> DeleteAsync(int userId);
+    Task<IMyResult> AddAsync(User user);
+    Task<IMyResult> UpdateAsync(User user);
+    Task<IMyResult> DeleteAsync(int userId);
 
     // Kullanıcı girişi gibi özel iş operasyonları eklenebilir.
     // Asenkron bir görev döndüren ve bool türünde bir sonuç içeren bir metot.

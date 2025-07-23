@@ -1,41 +1,49 @@
+using BlogProject.Business.DependencyResolvers;
+using BlogProject.Business.Concrete;
+// FluentValidation için gerekli using'ler
+using FluentValidation.AspNetCore; // Eski metot için
+using FluentValidation; // Yeni metotlar için
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// Controller'ları ekle ve FluentValidation entegrasyonunu yapılandır.
+builder.Services.AddControllers(); // .AddFluentValidation() kısmı buradan kaldırılacak
+
+// --- FluentValidation Yapılandırması: Güncellenmiş Bölüm ---
+// FluentValidation için iki yeni extension metodunu kullanıyoruz.
+// AddFluentValidationAutoValidation(): Sunucu tarafı otomatik doğrulamayı etkinleştirir.
+// AddFluentValidationClientsideAdapters(): İstemci tarafı doğrulama adaptörlerini etkinleştirir (eğer kullanılıyorsa).
+builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
+
+// Doğrulayıcıları (validators) kaydetmek için ayrı bir çağrı yapıyoruz.
+// typeof(CategoryManager).Assembly: Business katmanındaki doğrulayıcıları kaydeder.
+// Assembly.GetExecutingAssembly(): Web API projesindeki doğrulayıcıları kaydeder (eğer varsa).
+builder.Services.AddValidatorsFromAssembly(typeof(CategoryManager).Assembly);
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+// --- Güncellenmiş Bölüm Sonu ---
+
+
+// Swagger/OpenAPI yapılandırması
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// İş katmanı servislerini ekle
+builder.Services.AddBusinessServices(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// İstek işleme hattını yapılandırma
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
+app.UseAuthorization();
+app.MapControllers();
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

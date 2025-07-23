@@ -3,7 +3,7 @@ using Core.Utilities.Results.Abstract;
 namespace Core.Utilities.Results.Concrete;
 
     // IResult arayüzünün temel somut uygulaması.
-    public class Result : IResult
+    public class Result : IMyResult
     {
         // protected set: Sadece bu sınıf ve ondan türeyen sınıflar tarafından set edilebilir.
         // Constructor'da belirlendikten sonra dışarıdan değiştirilemez.

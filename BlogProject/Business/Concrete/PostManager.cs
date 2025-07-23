@@ -21,7 +21,7 @@ namespace BlogProject.Business.Concrete;
             _userService = userService;
         }
 
-        public async Task<IResult> AddAsync(Post post)
+        public async Task<IMyResult> AddAsync(Post post)
         {
             // 1. Doğrulama:
             var validator = new PostValidator();
@@ -54,7 +54,7 @@ namespace BlogProject.Business.Concrete;
             return new SuccessResult("Makale başarıyla eklendi.");
         }
 
-        public async Task<IResult> DeleteAsync(int postId)
+        public async Task<IMyResult> DeleteAsync(int postId)
         {
             var postToDelete = await _postRepository.GetByIdAsync(postId);
             if (postToDelete == null)
@@ -109,7 +109,7 @@ namespace BlogProject.Business.Concrete;
             return new SuccessDataResult<List<Post>>(posts, $"'{userResult.Data.Username}' kullanıcısına ait makaleler listelendi.");
         }
 
-        public async Task<IResult> UpdateAsync(Post post)
+        public async Task<IMyResult> UpdateAsync(Post post)
         {
             // 1. Doğrulama:
             var validator = new PostValidator();

@@ -17,7 +17,7 @@ public class UserManager : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<IResult> AddAsync(User user)
+    public async Task<IMyResult> AddAsync(User user)
     {
         // 1. Doğrulama:
         var validator = new UserValidator();
@@ -97,7 +97,7 @@ public async Task<IDataResult<bool>> AuthenticateUserAsync(string username, stri
     }
 }
 
-    public async Task<IResult> DeleteAsync(int userId)
+    public async Task<IMyResult> DeleteAsync(int userId)
     {
         var userToDelete = await _userRepository.GetByIdAsync(userId);
         if (userToDelete == null)
@@ -153,7 +153,7 @@ public async Task<IDataResult<bool>> AuthenticateUserAsync(string username, stri
         return new SuccessDataResult<User>(user, "Kullanıcı başarıyla getirildi.");
     }
 
-    public async Task<IResult> UpdateAsync(User user)
+    public async Task<IMyResult> UpdateAsync(User user)
     {
         // 1. Doğrulama:
         var validator = new UserValidator();
